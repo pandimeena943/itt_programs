@@ -1,0 +1,25 @@
+def multiply(num1: str, num2: str) -> str:
+    # Handle zero edge case
+    if num1 == "0" or num2 == "0":
+        return "0"
+    
+    # Initialize result array with zeros
+    res = [0] * (len(num1) + len(num2))
+    
+    # Reverse both strings to work from right-to-left easily
+    num1, num2 = num1[::-1], num2[::-1]
+    
+    for i in range(len(num1)):
+        for j in range(len(num2)):
+            # Multiply digits (convert single char to int is allowed)
+            digit_prod = int(num1[i]) * int(num2[j])
+            
+            # Add to current position and handle the carry
+            res[i + j] += digit_prod
+            res[i + j + 1] += res[i + j] // 10
+            res[i + j] %= 10
+            
+    # Reverse back and remove leading zero if it exists
+    # Convert list of ints back to a string
+    result = "".join(map(str, res[::-1]))
+    return result.lstrip('0')
